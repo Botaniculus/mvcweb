@@ -12,9 +12,9 @@ abstract class Controller
     abstract function execute($parameters);
 
     public function printView(){
-      if($this->pohled){
+      if($this->view){
         extract($this->data); //extract data
-        require("views/$this->pohled.phtml");
+        require("views/$this->view.phtml");
       }
     }
 

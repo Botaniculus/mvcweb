@@ -9,3 +9,8 @@ function autoloadClass($name){
 }
 
 spl_autoload_register("autoloadClass");
+
+$router = new RouterController();
+$router->execute(array($_SERVER['REQUEST_URI']));
+
+$router->printView();

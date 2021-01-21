@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="cs-cz">
+    <head>
+        <base href="/mvc" />
+        <meta charset="UTF-8" />
+        <title><?= $title ?></title>
+        <meta name="description" content="<?= $description ?>" />
+        <meta name="keywords" content="<?= $keywords ?>" />
+        <link rel="stylesheet" href="style.css" type="text/css"/>
+    </head>
+
+    <body>
+        <header>
+            <h1>MVC - pokus</h1>
+        </header>
+
+        <nav>
+            <ul>
+                <li><a href="clanek/uvod">Úvod</a></li>
+                <li><a href="clanek">Články</a></li>
+                <li><a href="kontakt">Kontakt</a></li>
+            </ul>
+        </nav>
+        <br clear="both" />
+
+        <article>
+          <?php $this->controller->printView(); ?>
+        </article>
+
+        <footer>
+            <p>Pokus</p>
+        </footer>
+    </body>
+</html>
