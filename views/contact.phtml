@@ -1,0 +1,14 @@
+<header><h1>Kontaktní formulář</h1></header>
+<section>
+  <p>Kontaktujte nás odesláním formuláře níže.</p>
+
+  <form method="post" id="form-email">
+      <label for="email">Vaše emailová adresa</label><br />
+      <input class="fancy-input" type="email" id="email" name="email" required="required" value="<?php if (isset($_POST['email'])) echo(htmlspecialchars($_POST['email'])); ?>" /><br /><br />
+      <label for="year">Antispam - zadejte aktuální rok</label><br />
+      <input class="fancy-input" type="text" id="year" name="year" required="required" /><br /><br />
+      <label for="message">Zpráva</label><br />
+      <textarea class="fancy-areainput" id="message" name="message"><?php if (isset($_POST['message'])) echo(htmlspecialchars($_POST['message'])); ?></textarea><br /><br />
+      <input type="submit" name="send" value="Odeslat" />
+  </form>
+</section>
