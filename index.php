@@ -10,6 +10,8 @@ function autoloadClass($name){
 
 spl_autoload_register("autoloadClass");
 
+Db::connect("127.0.0.1", "root", "", "mvc_db");
+
 $router = new RouterController();
 $router->execute(array($_SERVER['REQUEST_URI']));
 
