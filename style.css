@@ -13,7 +13,7 @@ a.active{
   background: black;
   color: white !important;
 }
-footer {
+.footer {
   padding: 10px;
   padding-top: 15px;
   margin-top: 10px;
@@ -21,6 +21,12 @@ footer {
   color: white;
   text-align: center;
 }
+.message{
+    border: 1px solid #9DC2F8;
+    background: #DBE8F8;
+    padding: 3px;
+}
+
 .fancy-input{
     padding:5px;
     border:2px dashed #c0bce0;
@@ -92,4 +98,26 @@ footer {
     border-top-left-radius: 5px;
     -webkit-border-top-right-radius: 5px;
     border-top-right-radius: 5px;
+}
+.fancy-submit{
+  background: #FFF;
+	border: 3px solid #0073ff;
+	color: #000;
+	padding: 5px;
+	border-radius: 20px;
+	-webkit-border-radius: 20px;
+	width: 100%;
+	transition: background, 0.2s;
+	-webkit-transition: background, 0.2s;
+	font-size: 105%;
+	cursor: pointer;
+}
+.fancy-submit:hover {
+	background: #0073ff;
+	color: #FFF;
+}
+.fancy-submit:focus {
+	background: #007;
+	color: #EEE;
+	border-color: #007;
 }

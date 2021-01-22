@@ -1,0 +1,78 @@
+<header>
+  <h1>Editor článků</h1>
+</header>
+
+<section>
+  <form method="post">
+    <input type="hidden" name="article_id" value="<?= $article['article_id'] ?>" />
+
+    <label for="article_title">Titulek</label><br />
+    <input type="text" id="article_title" name="article_title" class="fancy-input" value="<?= $article['article_title'] ?>" /><br /><br />
+
+    <label for="article_url">URL</label><br />
+    <input type="text" id="article_url" name="article_url" class="fancy-input" value="<?= $article['article_url'] ?>" /><br /><br />
+
+    <label for="article_description">Popis</label><br />
+    <input type="text" id="article_description" name="article_description" class="fancy-input" value="<?= $article['article_description'] ?>" /><br /><br />
+
+    <label for="article_keywords">Klíčová slova</label><br />
+    <input type="text" id="article_keywords" name="article_keywords" class="fancy-input" value="<?= $article['article_keywords'] ?>" /><br /><br />
+
+    <textarea class="fancy-areainput" name="article_content"><?= $article['article_content'] ?></textarea>
+
+    <input class="fancy-submit" type="submit" name="article_submit" value="Uložit článek" />
+  </form>
+  <script src="https://cdn.tiny.cloud/1/g3bb2hnmstt85rymhiywlmv88qoywdyrfjpijqigew2i95sx/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+
+  <script type="text/javascript">
+  tinymce.init({
+    selector: "textarea[name=article_content]",
+    plugins: [
+      "advlist autolink lists link image charmap print anchor",
+      "searchreplace visualblocks code fullscreen",
+      "insertdatetime media table contextmenu paste",
+      "autolink lists media table"
+    ],
+    toolbar: "insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | link image",
+    entities: "160,nbsp",
+    entity_encoding: "named",
+    entity_encoding: "raw",
+
+    // without images_upload_url set, Upload tab won't show up
+    images_upload_url: 'UploadImage.php',
+
+						// override default upload handler to simulate successful upload
+						images_upload_handler: function (blobInfo, success, failure) {
+							var xhr, formData;
+
+							xhr = new XMLHttpRequest();
+							xhr.withCredentials = false;
+							xhr.open('POST', 'upload.php');
+
+							xhr.onload = function() {
+								var json;
+
+								if (xhr.status != 200) {
+									failure('HTTP Error: ' + xhr.status);
+									return;
+								}
+
+								json = JSON.parse(xhr.responseText);
+
+								if (!json || typeof json.location != 'string') {
+									failure('Invalid JSON: ' + xhr.responseText);
+									return;
+								}
+
+								success(json.location);
+							};
+
+							formData = new FormData();
+							formData.append('file', blobInfo.blob(), blobInfo.filename());
+
+							xhr.send(formData);
+						},
+  });
+
+  </script>
+</section>

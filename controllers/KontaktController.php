@@ -8,9 +8,14 @@ class KontaktController extends Controller
       'description' => 'Kontaktní formulář SOVF.'
     );
     if(isset($_POST['send'])){
-      if($_POST['year'] == date('Y')){
+      try{
         $emailSender = new EmailSender();
-        $emailSender->send("bofin@skaut.cz", "Email z webu", $_POST['message'], $_POST['email']);
+        $emailSender->sendWithAntispam($_POST['year'], "bofin@skaut.cz", "Email z webu", $_POST['message'], $_POST['email']);
+        $this->addMessage('Email byl úspěšně odeslán.', true);
+        $this->redirect('kontakt');
+      }
+      catch(UserException $e){
+        $this->addMessage($e->getMessage(), false);
       }
     }
 

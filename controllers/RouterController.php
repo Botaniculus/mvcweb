@@ -21,7 +21,8 @@ class RouterController extends Controller
     $this->data['title'] = $this->controller->header['title'];
     $this->data['description'] = $this->controller->header['description'];
     $this->data['keywords'] = $this->controller->header['keywords'];
-
+    $this->data['messages'] = $this->getMessages();
+    
     $this->view = 'layout';
   }
 
@@ -41,4 +42,6 @@ class RouterController extends Controller
 
     return $sentence;
   }
+
+
 }

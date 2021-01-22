@@ -12,6 +12,7 @@
         <!-- Latest compiled and minified CSS -->
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
         <link rel="stylesheet" href="style.css" type="text/css"/>
+
     </head>
 
     <body>
@@ -25,14 +26,23 @@
                 <li><a href="clanek">Články</a></li>
                 <li><a href="kontakt">Kontakt</a></li>
             </ul>
+            <ul class="nav navbar-nav navbar-right">
+    		        <li><a href="administrace">Administrace</a></li>
+    		    </ul>
         </nav>
-        <br clear="both" />
 
-        <article class="container">
+        <div class="container">
+
+        <article >
+          <?php foreach ($_messages as $message) : ?>
+              <?= $message ?>
+          <?php endforeach ?>
+
           <?php $this->controller->printView(); ?>
         </article>
 
-        <footer class="text-center">
+      </div>
+        <footer class="text-center footer">
             <p>Pokus</p>
         </footer>
     </body>

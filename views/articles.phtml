@@ -1,0 +1,16 @@
+<header>
+  <h1>Seznam článků</h1>
+</header>
+
+<section>
+  <table>
+  <?php foreach($articles as $article) : ?>
+    <tr>
+      <td>
+        <h2><a href="clanek/<?=$article['article_url'] ?>"><?= $article['article_title'] ?></a></h2>
+        <?= $article['article_description'] ?>
+      </td>
+    </tr>
+  <?php endforeach ?>
+  </table>
+</section>
