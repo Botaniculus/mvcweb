@@ -26,6 +26,6 @@ class ArticlesManager
   }
 
   public function removeArticle($url){
-    Db::query('DELETE FROM clanky WHERE url = ?', array($url));
+    Db::query('DELETE FROM articles WHERE article_url = ?', array($url));
   }
 }
