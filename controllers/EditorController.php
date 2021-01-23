@@ -2,6 +2,8 @@
 class EditorController extends Controller
 {
   public function execute($parameters){
+    //To add later: Allow user to edit or remove only his articles (author_id == user_id), unless he's (user_permissions>=2)
+    $this->verifyUser(1);
     $this->header['title'] = 'Editor článků';
     $articlesManager = new ArticlesManager();
     $article = array(
