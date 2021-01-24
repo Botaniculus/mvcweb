@@ -7,7 +7,7 @@ class EditorController extends Controller
     $user = $userManager->getUser();
     $user_id = $user['user_id'];
     $user_permissions = $user['user_permissions'];
-  
+
     $this->header['title'] = 'Editor článků';
     $articlesManager = new ArticlesManager();
     $article = array(
@@ -20,9 +20,11 @@ class EditorController extends Controller
       'article_author_id' => ''
     );
     if(isset($_POST['article_submit'])){
-      $keys = array('article_title', 'article_content', 'article_url', 'article_description', 'article_keywords');
+      $keys = array('article_title', 'article_content', 'article_description', 'article_keywords');
       $article = array_intersect_key($_POST, array_flip($keys));
       $article['article_author_id'] = $user_id;
+      $article['article_url'] = $articlesManager->titleToUrl($article['article_title']);
+      
       $articlesManager->saveArticle($_POST['article_id'], $article);
       $this->addMessage('Článek byl úspěšně uložen', true);
       $this->redirect('clanek/' . $article['article_url']);
