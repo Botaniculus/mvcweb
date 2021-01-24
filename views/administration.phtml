@@ -3,7 +3,7 @@
 </header>
 
 <section>
-  <p>Vítejte v administraci, jste přihlášeni jako <?= $user_name ?></p>
+  <p>Vítejte v administraci, jste přihlášeni jako <?= $user_name ?>, máte úroveň <?= $user_permissions ?> a vaše id je <?= $user_id ?></p>
   <?php if (!$user_permissions) : ?>
       <p>Nemáte administrátorská oprávnění, požádejte administrátora webu, aby vám je přidělil.</p>
   <?php endif ?>

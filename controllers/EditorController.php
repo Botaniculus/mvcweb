@@ -2,8 +2,12 @@
 class EditorController extends Controller
 {
   public function execute($parameters){
-    //To add later: Allow user to edit or remove only his articles (author_id == user_id), unless he's (user_permissions>=2)
     $this->verifyUser(1);
+    $userManager = new UserManager();
+    $user = $userManager->getUser();
+    $user_id = $user['user_id'];
+    $user_permissions = $user['user_permissions'];
+  
     $this->header['title'] = 'Editor článků';
     $articlesManager = new ArticlesManager();
     $article = array(
@@ -12,19 +16,27 @@ class EditorController extends Controller
       'article_content' => '',
       'article_url' => '',
       'article_description' => '',
-      'article_keywords' => ''
+      'article_keywords' => '',
+      'article_author_id' => ''
     );
     if(isset($_POST['article_submit'])){
       $keys = array('article_title', 'article_content', 'article_url', 'article_description', 'article_keywords');
       $article = array_intersect_key($_POST, array_flip($keys));
+      $article['article_author_id'] = $user_id;
       $articlesManager->saveArticle($_POST['article_id'], $article);
       $this->addMessage('Článek byl úspěšně uložen', true);
       $this->redirect('clanek/' . $article['article_url']);
     }
     else if(!empty($parameters[0])){
       $loadArticle = $articlesManager->getArticle($parameters[0]);
-      if($loadArticle)
-        $article = $loadArticle;
+      if($loadArticle){
+        if(($loadArticle['article_author_id'] == $user_id) || $user_permissions >= 2)
+          $article = $loadArticle;
+        else{
+          $this->addMessage('Nemáte oprávnění editovat tento článek.', false);
+          $this->redirect('clanek/' . $loadArticle['article_url']);
+        }
+      }
       else
         $this->addMessage('Článek nebyl nalezen', false);
     }

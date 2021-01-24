@@ -14,6 +14,7 @@ class AdministraceController extends Controller
     $user = $userManager->getUser();
     $this->data['user_name'] = $user['user_name'];
     $this->data['user_permissions'] = $user['user_permissions'];
+    $this->data['user_id'] = $user['user_id'];
 
     $this->view = 'administration';
   }

@@ -6,13 +6,22 @@ class ClanekController extends Controller
     $userManager = new UserManager();
     $user = $userManager->getUser();
     $this->data['user_permissions'] = $user['user_permissions'];
+    $this->data['user_id'] = $user['user_id'];
 
     if(!empty($parameters[1]) && $parameters[1] == 'odstranit'){
-      // TO ADD LATER: check if the user_id equals article_author_id OR if user_permissions is equal or greater than 2
       $this->verifyUser(1);
-      $articlesManager->removeArticle($parameters[0]);
-      $this->addMessage('Článek byl úspěšně odstraněn', true);
-      $this->redirect('clanek');
+      $article = $articlesManager->getArticle($parameters[0]);
+
+      if(($user['user_id'] == $article['article_author_id']) || $user['user_permissions'] >='2'){
+        $articlesManager->removeArticle($parameters[0]);
+        $this->addMessage('Článek byl úspěšně odstraněn', true);
+        $this->redirect('clanek');
+      }
+      else{
+        $this->addMessage('Nemáte oprávnění odstranit tento článek', false);
+        $this->redirect('clanek/' . $article['article_url']);
+      }
+
     }
     else if(!empty($parameters[0]))
     {

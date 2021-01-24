@@ -4,7 +4,7 @@ class ArticlesManager
 {
   public function getArticle($url){
     return Db::querySingleRow('
-      SELECT `article_id`, `article_title`, `article_content`, `article_url`, `article_description`, `article_keywords`
+      SELECT `article_id`, `article_title`, `article_content`, `article_url`, `article_description`, `article_keywords`, `article_author_id`
       FROM `articles`
       WHERE `article_url` = ?
     ', array($url));
@@ -12,7 +12,7 @@ class ArticlesManager
 
   public function getArticles(){
     return Db::queryAllRows('
-      SELECT `article_id`, `article_title`, `article_url`, `article_description`
+      SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`
       FROM `articles`
       ORDER BY `article_id` DESC
     ');
