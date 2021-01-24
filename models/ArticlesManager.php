@@ -19,8 +19,15 @@ class ArticlesManager
   }
 
   public function saveArticle($id, $article){
-    if(!$id)
-      Db::insert('articles', $article);
+    if(!$id){
+      try{
+        Db::insert('articles', $article);
+      }
+      catch (PDOException $e){
+        throw new UserException('Vyberte prosím jiný titulek, tento je již použit.');
+      }
+    }
+
     else
       Db::update('articles', $article, 'WHERE article_id = ?', array($id));
   }
@@ -120,7 +127,18 @@ class ArticlesManager
     $url = strtr($title, $prevodni_tabulka);
     $url = strtolower($url);
     $url = str_replace(' ', '-', $url);
+    $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
 
-    return preg_replace('/[^A-Za-z0-9\-]/', '', $url);;
+    if($this->getArticle($url)){
+      $num = 2;
+      $tempUrl = $url;
+      while($this->getArticle($tempUrl)){
+        $tempUrl = $url . $num;
+        $num = $num + 1;
+      }
+      $url = $tempUrl;
+    }
+
+    return $url;
   }
 }

@@ -24,10 +24,17 @@ class EditorController extends Controller
       $article = array_intersect_key($_POST, array_flip($keys));
       $article['article_author_id'] = $user_id;
       $article['article_url'] = $articlesManager->titleToUrl($article['article_title']);
-      
-      $articlesManager->saveArticle($_POST['article_id'], $article);
-      $this->addMessage('Článek byl úspěšně uložen', true);
-      $this->redirect('clanek/' . $article['article_url']);
+      try{
+        $articlesManager->saveArticle($_POST['article_id'], $article);
+        $this->addMessage('Článek byl úspěšně uložen', true);
+        $this->redirect('clanek/' . $article['article_url']);
+      }
+      catch(UserException $e){
+        $this->addMessage(($e->getMessage()), false);
+        $this->redirect('editor');
+      }
+
+
     }
     else if(!empty($parameters[0])){
       $loadArticle = $articlesManager->getArticle($parameters[0]);
