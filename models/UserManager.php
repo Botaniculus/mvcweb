@@ -18,7 +18,7 @@ class UserManager
     try{
       DB::insert('users', $user);
     } catch (PDOException $e){
-      throw new UserException('Vyberte si prosím jiné jméno. Uživatel s tímto jménem je již zaregistrován', false);
+      throw new UserException('Vyberte si prosím jiné jméno. Uživatel s tímto jménem je již zaregistrován');
     }
   }
 
