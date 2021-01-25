@@ -34,6 +34,7 @@
     entities: "160,nbsp",
     entity_encoding: "named",
     entity_encoding: "raw",
+    height : "600",
 
     // without images_upload_url set, Upload tab won't show up
     images_upload_url: 'UploadImage.php',
@@ -44,7 +45,7 @@
 
 							xhr = new XMLHttpRequest();
 							xhr.withCredentials = false;
-							xhr.open('POST', 'upload.php');
+							xhr.open('POST', 'UploadImage.php');
 
 							xhr.onload = function() {
 								var json;

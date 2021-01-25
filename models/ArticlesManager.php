@@ -128,17 +128,7 @@ class ArticlesManager
     $url = strtolower($url);
     $url = str_replace(' ', '-', $url);
     $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-
-    if($this->getArticle($url)){
-      $num = 2;
-      $tempUrl = $url;
-      while($this->getArticle($tempUrl)){
-        $tempUrl = $url . $num;
-        $num = $num + 1;
-      }
-      $url = $tempUrl;
-    }
-
+    
     return $url;
   }
 }
