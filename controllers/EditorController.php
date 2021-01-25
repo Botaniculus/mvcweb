@@ -30,11 +30,10 @@ class EditorController extends Controller
       $article['article_author_id'] = $user_id;
       $article['article_url'] = $articlesManager->titleToUrl($article['article_title']);
       try{
-        if($article['article_author_id'] == $user_id || $user_permissions >= 2){
           $articlesManager->saveArticle($_POST['article_id'], $article);
           $this->addMessage('Článek byl úspěšně uložen', true);
           $this->redirect('clanek/' . $article['article_url']);
-        }
+
       }
       catch(UserException $e){
         $this->addMessage(($e->getMessage()), false);
