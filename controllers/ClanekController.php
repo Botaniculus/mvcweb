@@ -8,6 +8,7 @@ class ClanekController extends Controller
     $this->data['user_permissions'] = $user['user_permissions'];
     $this->data['user_id'] = $user['user_id'];
 
+    // ----- delete article ----- //
     if(!empty($parameters[1]) && $parameters[1] == 'odstranit'){
       $this->verifyUser(1);
       $article = $articlesManager->getArticle($parameters[0]);
@@ -21,13 +22,17 @@ class ClanekController extends Controller
         $this->addMessage('Nemáte oprávnění odstranit tento článek', false);
         $this->redirect('clanek/' . $article['article_url']);
       }
-
     }
+
+
     else if(!empty($parameters[0]))
     {
       $article = $articlesManager->getArticle($parameters[0]);
       if(!$article)
         $this->redirect('error');
+
+      $this->data['authorname'] = $userManager->getUsername($article['article_author_id']);
+      
       $this->header = array(
         'title' => $article['article_title'],
         'keywords' => $article['article_keywords'],
