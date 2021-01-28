@@ -24,12 +24,18 @@ class ArticlesManager
         Db::insert('articles', $article);
       }
       catch (PDOException $e){
-        throw new UserException('Vyberte prosím jiný titulek, tento je již použit.');
+        throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (insert)');
       }
     }
 
-    else
-      Db::update('articles', $article, 'WHERE article_id = ?', array($id));
+    else{
+      try{
+        Db::update('articles', $article, 'WHERE article_id = ?', array($id));
+      }
+      catch (PDOException $e){
+        throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (update)');
+      }
+    }
   }
 
   public function removeArticle($url){
@@ -128,7 +134,7 @@ class ArticlesManager
     $url = strtolower($url);
     $url = str_replace(' ', '-', $url);
     $url = preg_replace('/[^A-Za-z0-9\-]/', '', $url);
-    
+
     return $url;
   }
 }
