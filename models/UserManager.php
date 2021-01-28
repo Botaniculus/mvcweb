@@ -43,4 +43,14 @@ class UserManager
       return $_SESSION['user'];
     return null;
   }
+
+  public function getUsername($id){
+    $username = Db::querySingleColumn('
+      SELECT user_name
+      FROM users
+      WHERE user_id = ?
+    ', array($id));
+
+    return $username;
+  }
 }
