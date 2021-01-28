@@ -38,7 +38,6 @@ class EditorController extends Controller
       catch(UserException $e){
         $this->addMessage(($e->getMessage()), false);
         $article['article_id'] = $_POST['article_id'];
-
       }
 
     }
