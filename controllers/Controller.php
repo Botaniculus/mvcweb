@@ -13,9 +13,9 @@ abstract class Controller
 
     public function printView(){
       if($this->view){
-        extract($this->treat($this->data));
+        extract($this->sanitize($this->data));
         extract($this->data, EXTR_PREFIX_ALL, "");
-        // treated is $x, not treated is $_x
+        // sanitized is $x, not sanitized is $_x
 
         require("views/$this->view.phtml");
       }
@@ -45,12 +45,12 @@ abstract class Controller
       else return array();
     }
 
-    private function treat($x = null) {
+    private function sanitize($x = null) {
         if (!isset($x)) return null;
         elseif (is_string($x)) return htmlspecialchars($x, ENT_QUOTES);
         elseif (is_array($x)) {
             foreach($x as $k => $v){
-                $x[$k] = $this->treat($v);
+                $x[$k] = $this->sanitize($v);
             }
             return $x;
         }
