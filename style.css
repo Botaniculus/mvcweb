@@ -13,14 +13,7 @@ a.active{
   background: black;
   color: white !important;
 }
-.footer {
-  padding: 10px;
-  padding-top: 15px;
-  margin-top: 10px;
-  background-color: #222222 !important;
-  color: white;
-  text-align: center;
-}
+
 .message{
     border: 1px solid #9DC2F8;
     background: #DBE8F8;
@@ -120,4 +113,47 @@ a.active{
 	background: #007;
 	color: #EEE;
 	border-color: #007;
+}
+
+
+html, body {
+  height: 100%;
+}
+
+#wrap {
+  min-height: 92.5%;
+}
+
+#main {
+  overflow:auto;
+  padding-bottom:80px; /* this needs to be bigger than footer height*/
+}
+
+.footer {
+  position: relative;
+  margin-top: -60px; /* negative value of footer height */
+  height: 60px;
+  clear:both;
+  padding: 10px;
+  padding-top:20px;
+
+  background-color: #222222 !important;
+  color: white;
+  text-align: center;
+}
+
+.jumbotron{
+  /*font-family: "Palatino", "Palladio";*/
+  font-family: "Garamond", serif;
+}
+.perex{
+  color: #1E4A80;
+  font-size: large;
+}
+.superheading{
+  font-size: 300%;
+  font-weight: bold;
+}
+p.gray{
+  color: #888A85;
 }
