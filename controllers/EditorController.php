@@ -8,8 +8,6 @@ class EditorController extends Controller
 
     $userManager = new UserManager();
     $user = $userManager->getUser();
-    $user_id = $user['user_id'];
-    $user_permissions = $user['user_permissions'];
 
     $this->header['title'] = 'Editor článků';
     $articlesManager = new ArticlesManager();
@@ -20,15 +18,20 @@ class EditorController extends Controller
       'article_url' => '',
       'article_description' => '',
       'article_keywords' => '',
-      'article_author_id' => ''
+      'article_author_id' => '',
+      'article_author_name' => '',
+      'article_submitted_date' => ''
     );
 
 
     if(isset($_POST['article_submit'])){
       $keys = array('article_title', 'article_content', 'article_description', 'article_keywords');
       $article = array_intersect_key($_POST, array_flip($keys));
-      $article['article_author_id'] = $user_id;
+      $article['article_author_id'] = $user['user_id'];
+      $article['article_author_name'] = $user['user_name'];
       $article['article_url'] = $articlesManager->titleToUrl($article['article_title']);
+      $article['article_submitted_date'] = date("Y-m-d", strtotime( (!empty($_POST['article_submitted_date'])) ? str_replace(' ', '', $_POST['article_submitted_date']) : date("Y-m-d")));
+
       try{
           $articlesManager->saveArticle($_POST['article_id'], $article);
           $this->addMessage('Článek byl úspěšně uložen', true);
@@ -45,7 +48,7 @@ class EditorController extends Controller
     else if(!empty($parameters[0])){
       $loadArticle = $articlesManager->getArticle($parameters[0]);
       if($loadArticle){
-        if(($loadArticle['article_author_id'] == $user_id) || $user_permissions >= 2){
+        if(($loadArticle['article_author_id'] == $user['user_id']) || $user['user_permissions'] >= 2){
           $article = $loadArticle;
         }
         else{

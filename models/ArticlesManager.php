@@ -4,7 +4,7 @@ class ArticlesManager
 {
   public function getArticle($url){
     return Db::querySingleRow('
-      SELECT `article_id`, `article_title`, `article_content`, `article_url`, `article_description`, `article_keywords`, `article_author_id`
+      SELECT `article_id`, `article_title`, `article_content`, `article_url`, `article_description`, `article_keywords`, `article_author_id`, `article_author_name`, `article_submitted_date`
       FROM `articles`
       WHERE `article_url` = ?
     ', array($url));
@@ -12,9 +12,9 @@ class ArticlesManager
 
   public function getArticles(){
     return Db::queryAllRows('
-      SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`
+      SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`
       FROM `articles`
-      ORDER BY `article_id` DESC
+      ORDER BY `article_submitted_date` DESC, `article_id` DESC
     ');
   }
 
@@ -24,11 +24,13 @@ class ArticlesManager
         Db::insert('articles', $article);
       }
       catch (PDOException $e){
-        throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (insert)');
+        throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (insert) ' . $article['article_submitted_date']);
       }
     }
 
     else{
+      unset($article['article_author_id']); // We don't want to change article's author, when it's modified by an admin
+      unset($article['article_author_name']);
       try{
         Db::update('articles', $article, 'WHERE article_id = ?', array($id));
       }

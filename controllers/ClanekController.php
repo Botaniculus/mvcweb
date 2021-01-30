@@ -31,15 +31,22 @@ class ClanekController extends Controller
       if(!$article)
         $this->redirect('error');
 
-      $this->data['authorname'] = $userManager->getUsername($article['article_author_id']);
-      
+      $this->data['authorname'] = $article['article_author_name'];
+
+      $this->data['date'] = date("j. n. Y", strtotime($article['article_submitted_date']));
+
       $this->header = array(
         'title' => $article['article_title'],
         'keywords' => $article['article_keywords'],
         'description' => $article['article_description']
       );
+
+      $this->data['permissions'] = (($this->data['user_id'] == $article['article_author_id']) || $this->data['user_permissions'] >= 2) ? true : false;
+
       $this->data['title'] = $article['article_title'];
       $this->data['content'] = $article['article_content'];
+      $this->data['description'] = $article['article_description'];
+      $this->data['url'] = $article['article_url'];
 
       $this->view = 'article';
     }

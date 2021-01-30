@@ -8,6 +8,7 @@
     <tr>
       <td>
         <h2><a href="clanek/<?= $article['article_url'] ?>"><?= $article['article_title'] ?></a></h2>
+        <p class="gray"><?= $article['article_author_name'] ?> | <?= date("j. n. Y", strtotime($article['article_submitted_date'])) ?></p>
         <?= $article['article_description'] ?>
         <?php if ($user_permissions >= 2 || ($article['article_author_id'] == $user_id)) : ?>
           <br />

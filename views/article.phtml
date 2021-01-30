@@ -1,7 +1,14 @@
 <header>
-  <i>Tento článek pro vás napsal <?= $authorname ?></i>
-  <h1><?= $title ?></h1>
+  <p class="gray">Autor: <?= $authorname ?> | <?= $date ?></p>
+  <h1 class="superheading"><?= $title ?></h1>
 </header>
 <section>
+  <p class="perex"><b><?= $description ?></b></p>
   <?= $_content ?>
+
+  <?php if ($permissions) : ?>
+    <br />
+    <a href="editor/<?= $url ?>">Editovat</a>
+    <a href="clanek/<?= $url ?>/odstranit">Odstranit</a>
+  <?php endif ?>
 </section>

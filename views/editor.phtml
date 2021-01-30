@@ -10,14 +10,17 @@
     <input type="text" id="article_title" name="article_title" class="fancy-input" value="<?= $article['article_title'] ?>" /><br /><br />
 
     <label for="article_description">Popis</label><br />
-    <input type="text" id="article_description" name="article_description" class="fancy-input" value="<?= $article['article_description'] ?>" /><br /><br />
+    <textarea class="fancy-areainput" id="article_description" name="article_description" rows="10"><?= $article['article_description'] ?></textarea><br /><br />
 
     <label for="article_keywords">Klíčová slova</label><br />
     <input type="text" id="article_keywords" name="article_keywords" class="fancy-input" value="<?= $article['article_keywords'] ?>" /><br /><br />
 
+    <label for="article_submitted_date">Datum (pokud jej necháte prázdné, uloží se dnešní datum)</label><br />
+    <input type="date" id="article_submitted_date" name="article_submitted_date" class="fancy-input" value="<?= $article['article_submitted_date'] ?>" /><br /><br />
+
     <textarea class="fancy-areainput" name="article_content"><?= $article['article_content'] ?></textarea>
 
-    <input class="fancy-submit" type="submit" name="article_submit" value="Uložit článek" />
+    <input class="fancy-submit" type="submit" name="article_submit" value="Uložit článek" /><br />
   </form>
   <script src="https://cdn.tiny.cloud/1/g3bb2hnmstt85rymhiywlmv88qoywdyrfjpijqigew2i95sx/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
 
