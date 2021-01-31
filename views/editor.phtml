@@ -5,6 +5,7 @@
 <section>
   <form method="post">
     <input type="hidden" name="article_id" value="<?= $article['article_id'] ?>" />
+    <input type="hidden" name="article_author_id" value="<?= $article['article_author_id'] ?>" />
 
     <label for="article_title">Titulek</label><br />
     <input type="text" id="article_title" name="article_title" class="fancy-input" value="<?= $article['article_title'] ?>" /><br /><br />
@@ -15,8 +16,15 @@
     <label for="article_keywords">Klíčová slova</label><br />
     <input type="text" id="article_keywords" name="article_keywords" class="fancy-input" value="<?= $article['article_keywords'] ?>" /><br /><br />
 
-    <label for="article_submitted_date">Datum (pokud jej necháte prázdné, uloží se dnešní datum)</label><br />
+    <label for="article_submitted_date">Datum</label><br />
     <input type="date" id="article_submitted_date" name="article_submitted_date" class="fancy-input" value="<?= $article['article_submitted_date'] ?>" /><br /><br />
+
+    <label for="article_author_name">Autor</label><br />
+    <input type="text" id="article_author_name" name="article_author_name" class="fancy-input" value="<?= $article['article_author_name'] ?>" /><br /><br />
+
+    <input type="hidden" id="" name="article_archival" value="0" <?= ($article['article_archival'] == 0) ? 'checked' : '' ?> />
+    <input type="checkbox" id="article_archival" name="article_archival" value="1" <?= ($article['article_archival'] == 1) ? 'checked' : '' ?> />
+    <label for="article_archival">Archivní článek</label><br /><br />
 
     <textarea class="fancy-areainput" name="article_content"><?= $article['article_content'] ?></textarea>
 
@@ -40,7 +48,7 @@
     height : "600",
 
     // without images_upload_url set, Upload tab won't show up
-    images_upload_url: 'UploadImage.php',
+    images_upload_url: 'models/UploadImage.php',
 
 						// override default upload handler to simulate successful upload
 						images_upload_handler: function (blobInfo, success, failure) {
@@ -48,7 +56,7 @@
 
 							xhr = new XMLHttpRequest();
 							xhr.withCredentials = false;
-							xhr.open('POST', 'UploadImage.php');
+							xhr.open('POST', 'models/UploadImage.php');
 
 							xhr.onload = function() {
 								var json;

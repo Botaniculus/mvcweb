@@ -18,20 +18,18 @@ class EditorController extends Controller
       'article_url' => '',
       'article_description' => '',
       'article_keywords' => '',
-      'article_author_id' => '',
-      'article_author_name' => '',
-      'article_submitted_date' => ''
+      'article_author_id' => $user['user_id'],
+      'article_author_name' => $user['user_name'],
+      'article_submitted_date' => date("Y-m-d"),
+      'article_archival' => 0
     );
 
 
     if(isset($_POST['article_submit'])){
-      $keys = array('article_title', 'article_content', 'article_description', 'article_keywords');
+      $keys = array('article_title', 'article_content', 'article_description', 'article_keywords', 'article_author_id', 'article_author_name', 'article_submitted_date', 'article_archival');
       $article = array_intersect_key($_POST, array_flip($keys));
-      $article['article_author_id'] = $user['user_id'];
-      $article['article_author_name'] = $user['user_name'];
       $article['article_url'] = $articlesManager->titleToUrl($article['article_title']);
-      $article['article_submitted_date'] = date("Y-m-d", strtotime( (!empty($_POST['article_submitted_date'])) ? str_replace(' ', '', $_POST['article_submitted_date']) : date("Y-m-d")));
-
+      
       try{
           $articlesManager->saveArticle($_POST['article_id'], $article);
           $this->addMessage('Článek byl úspěšně uložen', true);
