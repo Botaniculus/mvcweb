@@ -10,11 +10,11 @@
         <h2><a href="clanek/<?= $article['article_url'] ?>"><?= $article['article_title'] ?></a></h2>
         <p class="gray"><?= $article['article_author_name'] ?> | <?= date("j. n. Y", strtotime($article['article_submitted_date'])) ?> <?= ($article['article_archival']) ? '(Archivní)' : '' ?></p>
 
-        <?= $article['article_description'] ?>
+        <?= $article['article_description'] ?> <?= (!$article['article_empty']) ? '<a class="sign" href="clanek/' . $article['article_url'] . '">&#9654</a>' : '<a class="sign dot">&#9632</a>' ?>
         <?php if ($user_permissions >= 2 || ($article['article_author_id'] == $user_id)) : ?>
           <br />
-          <a href="editor/<?= $article['article_url'] ?>">Editovat</a>
-          <a style="float:right;" href="clanek/<?= $article['article_url'] ?>/odstranit">Odstranit</a>
+          <a href="editor/<?= $article['article_url'] ?>">[Editovat]</a>
+          <a style="float:right;" href="clanek/<?= $article['article_url'] ?>/odstranit">[Odstranit]</a>
         <?php endif ?>
       </div></td>
     </tr>
