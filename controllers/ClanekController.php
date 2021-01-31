@@ -27,28 +27,40 @@ class ClanekController extends Controller
 
     else if(!empty($parameters[0]))
     {
-      $article = $articlesManager->getArticle($parameters[0]);
-      if(!$article)
-        $this->redirect('error');
+      if($parameters[0] == 'archiv'){
+        $this->header = array(
+          'title' => 'Archivní články',
+          'keywords' => '',
+          'description' => ''
+        );
+        $articles = $articlesManager->getArticles('archival');
+        $this->data['articles'] = $articles;
+        $this->view = 'articles';
 
-      $this->data['authorname'] = $article['article_author_name'];
+      } else{
+        $article = $articlesManager->getArticle($parameters[0]);
+        if(!$article)
+          $this->redirect('error');
 
-      $this->data['date'] = date("j. n. Y", strtotime($article['article_submitted_date']));
+        $this->data['authorname'] = $article['article_author_name'];
 
-      $this->header = array(
-        'title' => $article['article_title'],
-        'keywords' => $article['article_keywords'],
-        'description' => $article['article_description']
-      );
+        $this->data['date'] = date("j. n. Y", strtotime($article['article_submitted_date']));
+        $this->data['archival'] = ($article['article_archival']) ? '(Archivní)' : '';
+        $this->header = array(
+          'title' => $article['article_title'],
+          'keywords' => $article['article_keywords'],
+          'description' => $article['article_description']
+        );
 
-      $this->data['permissions'] = (($this->data['user_id'] == $article['article_author_id']) || $this->data['user_permissions'] >= 2) ? true : false;
+        $this->data['permissions'] = (($this->data['user_id'] == $article['article_author_id']) || $this->data['user_permissions'] >= 2) ? true : false;
 
-      $this->data['title'] = $article['article_title'];
-      $this->data['content'] = $article['article_content'];
-      $this->data['description'] = $article['article_description'];
-      $this->data['url'] = $article['article_url'];
+        $this->data['title'] = $article['article_title'];
+        $this->data['content'] = $article['article_content'];
+        $this->data['description'] = $article['article_description'];
+        $this->data['url'] = $article['article_url'];
 
-      $this->view = 'article';
+        $this->view = 'article';
+      }
     }
 
     else
