@@ -18,11 +18,13 @@ class RouterController extends Controller
 
     $this->controller->execute($parsedURL);
 
+    $userManager = new UserManager();
+
     $this->data['title'] = $this->controller->header['title'];
     $this->data['description'] = $this->controller->header['description'];
     $this->data['keywords'] = $this->controller->header['keywords'];
     $this->data['messages'] = $this->getMessages();
-    
+    $this->data['administration'] = ($userManager->getUser()) ? $userManager->getUser()['user_name'] : 'Přihlášení';
     $this->view = 'layout';
   }
 
