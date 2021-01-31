@@ -1,14 +1,14 @@
 <header>
-  <p class="gray">Autor: <?= $authorname ?> | <?= $date ?></p>
+  <p class="gray">Autor: <?= $authorname ?> | <?= $date ?> <?= $archival ?></p>
   <h1 class="superheading"><?= $title ?></h1>
 </header>
 <section>
   <p class="perex"><b><?= $description ?></b></p>
-  <?= $_content ?>
+  <div class="article-content"><?= $_content ?></div>
 
   <?php if ($permissions) : ?>
     <br />
     <a href="editor/<?= $url ?>">Editovat</a>
-    <a href="clanek/<?= $url ?>/odstranit">Odstranit</a>
+    <a style="float:right;" href="clanek/<?= $url ?>/odstranit">Odstranit</a>
   <?php endif ?>
 </section>
