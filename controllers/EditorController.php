@@ -33,9 +33,23 @@ class EditorController extends Controller
       $article['article_empty'] = (empty($article['article_content'])) ? 1 : 0;
 
       try{
+        if(!empty($_POST['article_id'])){
+          $author_id = $articlesManager->getArticleAuthorById($_POST['article_id']);
+          if($user['user_id'] == $author_id || $user['user_permissions'] >= 2){
+            $articlesManager->saveArticle($_POST['article_id'], $article);
+            $this->addMessage('Článek byl úspěšně uložen', true);
+            $this->redirect('clanek/' . $article['article_url']);
+          }
+          else{
+            $this->addMessage('Nemáte oprávnění editovat tento článek, a neupravujte ty skryté vstupy', false);
+            $article['article_id'] = '';
+          }
+        } else{
           $articlesManager->saveArticle($_POST['article_id'], $article);
           $this->addMessage('Článek byl úspěšně uložen', true);
           $this->redirect('clanek/' . $article['article_url']);
+        }
+
 
       }
       catch(UserException $e){
