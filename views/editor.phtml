@@ -8,13 +8,13 @@
     <input type="hidden" name="article_author_id" value="<?= $article['article_author_id'] ?>" />
 
     <label for="article_title">Titulek</label><br />
-    <input type="text" id="article_title" name="article_title" class="fancy-input" value="<?= $article['article_title'] ?>" /><br /><br />
+    <h2><input type="text" id="article_title" name="article_title" class="fancy-input full-width" value="<?= $article['article_title'] ?>" /></h2><br /><br />
 
     <label for="article_description">Popis</label><br />
-    <textarea class="fancy-areainput" id="article_description" name="article_description" rows="10"><?= $article['article_description'] ?></textarea><br /><br />
+    <textarea class="fancy-areainput perex" id="article_description" name="article_description" rows="10"><?= $article['article_description'] ?></textarea><br /><br />
 
     <label for="article_keywords">Klíčová slova</label><br />
-    <input type="text" id="article_keywords" name="article_keywords" class="fancy-input" value="<?= $article['article_keywords'] ?>" /><br /><br />
+    <input type="text" id="article_keywords" name="article_keywords" class="fancy-input full-width" value="<?= $article['article_keywords'] ?>" /><br /><br />
 
     <label for="article_submitted_date">Datum</label><br />
     <input type="date" id="article_submitted_date" name="article_submitted_date" class="fancy-input" value="<?= $article['article_submitted_date'] ?>" /><br /><br />
@@ -46,7 +46,9 @@
     entity_encoding: "named",
     entity_encoding: "raw",
     height : "600",
-
+    image_caption: true,
+    content_css: "../style.css",
+    content_style: "body { font-family: serif; }",
     // without images_upload_url set, Upload tab won't show up
     images_upload_url: 'models/UploadImage.php',
 

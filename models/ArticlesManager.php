@@ -10,23 +10,25 @@ class ArticlesManager
     ', array($url));
   }
 
-  public function getArticles($param = null){
-    if($param == 'archival'){
-      return Db::queryAllRows('
-        SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_archival`
-        FROM `articles`
-        WHERE `article_archival` = ?
-        ORDER BY `article_submitted_date` DESC, `article_id` DESC
-      ', array(1));
-    }
-    else{
-      return Db::queryAllRows('
-        SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_archival`
-        FROM `articles`
-        ORDER BY `article_submitted_date` DESC, `article_id` DESC
-      ');
-    }
+  public function getArticles($page, $onPage, $must = '', $requiredValue = 1){
+    $where = (!empty($must)) ? "WHERE `$must` = ?" : '';
+    $array = (!empty($must)) ? array($requiredValue, (($page-1) * $onPage), $onPage) : array((($page-1) * $onPage), $onPage);
 
+      return Db::queryAllRows("
+        SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_archival`, `article_empty`
+        FROM `articles`
+        $where
+        ORDER BY `article_submitted_date` DESC, `article_id` DESC
+        LIMIT ?, ?
+      ", $array);
+  }
+  public function getArticlesCount($must = '', $requiredValue = 1){
+    $where = (!empty($must)) ? "WHERE `$must` = ?" : '';
+    $array = (!empty($must)) ? array($requiredValue) : array();
+
+    return Db::querySingleColumn("
+        SELECT COUNT(*) FROM `articles` $where
+      ", $array);
   }
 
   public function saveArticle($id, $article){

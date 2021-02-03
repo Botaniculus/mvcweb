@@ -25,6 +25,7 @@ class RouterController extends Controller
     $this->data['keywords'] = $this->controller->header['keywords'];
     $this->data['messages'] = $this->getMessages();
     $this->data['administration'] = ($userManager->getUser()) ? $userManager->getUser()['user_name'] : 'Přihlášení';
+    $this->data['loggedin'] = $userManager->getUser() ? true : false;
     $this->view = 'layout';
   }
 

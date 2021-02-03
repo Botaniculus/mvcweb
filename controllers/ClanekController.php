@@ -16,7 +16,7 @@ class ClanekController extends Controller
       if(($user['user_id'] == $article['article_author_id']) || $user['user_permissions'] >='2'){
         $articlesManager->removeArticle($parameters[0]);
         $this->addMessage('Článek byl úspěšně odstraněn', true);
-        $this->redirect('clanek');
+        $this->redirect('clanky');
       }
       else{
         $this->addMessage('Nemáte oprávnění odstranit tento článek', false);
@@ -27,17 +27,6 @@ class ClanekController extends Controller
 
     else if(!empty($parameters[0]))
     {
-      if($parameters[0] == 'archiv'){
-        $this->header = array(
-          'title' => 'Archivní články',
-          'keywords' => '',
-          'description' => ''
-        );
-        $articles = $articlesManager->getArticles('archival');
-        $this->data['articles'] = $articles;
-        $this->view = 'articles';
-
-      } else{
         $article = $articlesManager->getArticle($parameters[0]);
         if(!$article)
           $this->redirect('error');
@@ -60,19 +49,12 @@ class ClanekController extends Controller
         $this->data['url'] = $article['article_url'];
 
         $this->view = 'article';
-      }
+
     }
 
     else
     {
-        $this->header = array(
-          'title' => 'Články',
-          'keywords' => '',
-          'description' => ''
-        );
-        $articles = $articlesManager->getArticles();
-        $this->data['articles'] = $articles;
-        $this->view = 'articles';
+        $this->redirect('clanky');
     }
 
   }

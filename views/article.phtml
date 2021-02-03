@@ -1,9 +1,9 @@
 <header>
-  <p class="gray">Autor: <?= $authorname ?> | <?= $date ?> <?= $archival ?></p>
-  <h1 class="superheading"><?= $title ?></h1>
+  <p class="gray">Autor: <?= $authorname ?> | <?= $date ?><span style="float: right"><?= $archival ? 'Archivní' : '' ?></span></p>
+  <h1 class="opensans"><?= $title ?></h1>
 </header>
 <section>
-  <p class="perex"><b><?= $description ?></b></p>
+  <p class="perex"><b><?= $description ?></b></p><br />
   <div class="article-content"><?= $_content ?></div>
 
   <?php if ($permissions) : ?>

@@ -10,14 +10,17 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
         <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"/>
         <link rel="stylesheet" href="style.css" type="text/css"/>
         <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Garamond">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@600&display=swap" rel="stylesheet">
 
-        <link rel="icon" href="images/SOVF_logo_RGB.png" type="image/x-icon">
+        <link rel="icon" href="images/Znak_SOVF.png" type="image/x-icon">
     </head>
 
     <body>
+
 
         <nav class="navbar navbar-inverse navbar-sticky container-fluid">
           <div class="navbar-header">
@@ -25,12 +28,13 @@
           </div>
             <ul class="nav navbar-nav">
                 <li><a href="clanek/uvod">Úvod</a></li>
-                <li><a href="clanek">Články</a></li>
-                <li><a href="clanek/archiv">Archiv</a></li>
+                <li><a href="clanky">Články</a></li>
+                <li><a href="clanky/archiv">Archiv</a></li>
                 <li><a href="kontakt">Kontakt</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
-    		        <li><a href="administrace"><?= $administration ?></a></li>
+    		        <li><a href="administrace">
+                  <?= $loggedin ?  '<span class="glyphicon glyphicon-user"></span>' : '<span class="glyphicon glyphicon-log-in"></span>' ?> <?= $administration ?></a></li>
     		    </ul>
         </nav>
 
@@ -38,10 +42,13 @@
 
         <div class="container clear-top" id="main">
 
-          <div class="jumbotron text-center">
-    <h1><b>Skautský oddíl</b></h1><h1><b>Velena Fanderlika</b></h1>
-    <p><i>Před zlem nikdy neutíká skaut Velena Fanderlika!</i></p>
-    </div>
+          <div class="jumbotron text-center row">
+            <img src="images/Znak_SOVF.png" class="col-sm-4" />
+            <div class="col-sm-8 jumbo-text">
+               <h1><b>Skautský oddíl</b></h1><h1><b>Velena Fanderlika</b></h1>
+                   <p><i>Před zlem nikdy neutíká skaut Velena Fanderlika!</i></p>
+            </div>
+          </div>
 
         <article >
           <?php foreach ($_messages as $message) : ?>
@@ -54,7 +61,7 @@
       </div>
     </div>
         <footer class="text-center footer">
-            <p>&copy SOVF 2021‒<?= date('Y') ?></p>
+            <p>&copy SOVF 2006‒<?= date('Y') ?></p>
         </footer>
     </body>
 </html>
