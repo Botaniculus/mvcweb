@@ -9,10 +9,22 @@ class ArticlesManager
       WHERE `article_url` = ?
     ', array($url));
   }
+  public function getArticleAuthorById($id){
+    return Db::querySingleRow('
+      SELECT `article_author_id`
+      FROM `articles`
+      WHERE `article_id` = ?
+    ', array($id));
+  }
 
-  public function getArticles($page, $onPage, $must = '', $requiredValue = 1){
-    $where = (!empty($must)) ? "WHERE `$must` = ?" : '';
-    $array = (!empty($must)) ? array($requiredValue, (($page-1) * $onPage), $onPage) : array((($page-1) * $onPage), $onPage);
+  public function getArticles($page, $onPage, $tag = null){
+      if($tag){
+        $array = array("%" . $tag . "%", (($page-1) * $onPage), $onPage);
+        $where = "WHERE `article_keywords` LIKE ?";
+      } else{
+        $array = array((($page-1) * $onPage), $onPage);
+        $where = '';
+      }
 
       return Db::queryAllRows("
         SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_archival`, `article_empty`
@@ -22,9 +34,15 @@ class ArticlesManager
         LIMIT ?, ?
       ", $array);
   }
-  public function getArticlesCount($must = '', $requiredValue = 1){
-    $where = (!empty($must)) ? "WHERE `$must` = ?" : '';
-    $array = (!empty($must)) ? array($requiredValue) : array();
+
+  public function getArticlesCount($tag = null){
+    if($tag){
+      $array = array("%" . $tag . "%");
+      $where = "WHERE `article_keywords` LIKE ?";
+    } else{
+      $array = array();
+      $where = '';
+    }
 
     return Db::querySingleColumn("
         SELECT COUNT(*) FROM `articles` $where
