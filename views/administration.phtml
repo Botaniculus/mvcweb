@@ -3,12 +3,54 @@
 </header>
 
 <section>
-  <p>Vítejte v administraci, jste přihlášeni jako <?= $user_name ?>, máte úroveň <?= $user_permissions ?> a vaše id je <?= $user_id ?></p>
+  <p>Vítejte v administraci, jste přihlášeni jako <?= $user_name ?>, máte úroveň <?= $user_permissions ?></p>
   <?php if (!$user_permissions) : ?>
       <p>Nemáte administrátorská oprávnění, požádejte administrátora webu, aby vám je přidělil.</p>
   <?php endif ?>
 
     <a class="fancy-submit" href="editor">Editor článků</a>
-    
-    <a class="fancy-submit" href="administrace/odhlasit">Odhlásit</a>
+    <p></p>
+    <form method="POST">
+      <label for="user_name">Jméno</label><br />
+      <input class="fancy-input" type="text" id="user_name" name="user_name" value="<?= $user_name ?>"/><br /><br />
+
+      <label for="user_permissions">Oprávnění</label><br />
+      <input class="fancy-input" type="text" id="user_permissions" name="user_permissions" value="<?= $user_permissions ?>"/><br /><br />
+
+      <input type="submit" class="fancy-submit" name="save_user" value="Uložit"/>
+    </form>
+
+    <h2>Změnit heslo</h2>
+    <form method="POST">
+      <label for="old_password">Staré heslo</label><br />
+      <input class="fancy-input" type="password" id="old_password" name="old_password"/><br /><br />
+
+      <label for="new_password">Nové heslo</label><br />
+      <input class="fancy-input" type="password" id="new_password" name="new_password"/><br /><br />
+
+      <label for="new_password_2">Nové heslo znovu</label><br />
+      <input class="fancy-input" type="password" id="new_password_2" name="new_password_2"/><br /><br />
+      <input type="submit" class="fancy-submit" name="save_password" value="Uložit heslo"/>
+    </form>
+
+    <br />
+    <!--
+    <?php if ($user_permissions>=2) : ?>
+      <table>
+        <tr>
+          <th>Uživatelské jméno</th>
+          <th>Oprávnění</th>
+          <th>Odstranit</th>
+        </tr>
+        <?php foreach($users as $user) : ?>
+          <tr>
+            <th><?= $user['user_name'] ?></th>
+            <th><?= $user['user_permissions'] ?> <a href="?user_id={$user['user_id']}&user_permissions"</th>
+            <th><?= $user['user_permissions'] ?></th>
+          </tr>
+        <?php endforeach ?>
+      </table>
+    <?php endif ?>
+  -->
+    <a class="fancy-submit align-right" href="administrace/odhlasit">Odhlásit</a>
 </section>

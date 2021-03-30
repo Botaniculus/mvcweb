@@ -127,6 +127,11 @@ a.fancy-submit{
   text-decoration: none;
 }
 
+.fancy-select{
+  background: #A58754;
+
+}
+
 
 html, body {
   height: 100%;
@@ -159,12 +164,25 @@ html, body {
   font-family: "Garamond", serif !important;
 }
 .jumbotron h1{
-  font-size: 4.7vw;
+  font-size: 4.2vw;
   font-family: "Garamond", serif !important;
 }
 .jumbotron i{
   font-size: 1.3vw+30%;
   font-family: "Garamond", serif !important;
+}
+.jumbotron{
+  position: relative !important;
+}
+.jumbo-text {
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+}
+.jumbo-text h1{
+  font-variant: small-caps;
 }
 
 .perex{
@@ -257,9 +275,9 @@ Images
 */
 figure.image {
     display: inline-block;
-    border: 1px dotted gray;
+    border: 1px solid #BABDB6;
     /* adjust as needed */
-    padding: 3px;
+    /*padding: 3px;*/
     border-radius: 5px;
     margin-bottom: 10px;
     max-width: 100%;
@@ -268,7 +286,7 @@ figure.image {
 figure.image img {
     vertical-align: top;
     border-radius: 5px;
-    margin: 2px;
+    /*margin: 2px;*/
     max-width: 100% !important;
     height: auto !important;
 
@@ -309,19 +327,41 @@ a.dot{
     text-align: center;
 }
 
-.jumbotron{
-  position: relative !important;
+
+.keywords{
+  float: right;
+  margin-bottom: 10px;
 }
-.jumbo-text {
-  position: absolute;
-  right: 0px;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.keywords::after{
+  clear: both;
 }
+a.keyword{
+  display: inline-block;
+  background-color: #BEDEFF;
+  color: #204A87;
+  padding: 8px;
+  margin-left: 2px;
+  margin-bottom: 2px;
+  border-radius: 5px;
+  transition: background-color, 0.15s;
+  overflow: auto;
+}
+
+a.keyword:hover{
+  background-color: #204A87;
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
 @media (max-width: 767px /*width when bootstrap goes to mobile mode*/) {
   .jumbo-text{
     display: none;
+  }
+  .jumbotron img{
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 50%;
   }
   .navbar{
     text-align: center !important;
@@ -332,10 +372,9 @@ a.dot{
     float: none;
   }
 
-  margin-right: 0px;
-  margin-left: 0px;
   figure.align-left img, figure.align-right img{
     float: none;
   }
+
 
 }

@@ -31,16 +31,15 @@ class ClanekController extends Controller
         if(!$article)
           $this->redirect('error');
 
-        $this->data['authorname'] = $article['article_author_name'];
-
-        $this->data['date'] = date("j. n. Y", strtotime($article['article_submitted_date']));
-        $this->data['archival'] = ($article['article_archival']) ? '(Archivní)' : '';
         $this->header = array(
           'title' => $article['article_title'],
           'keywords' => $article['article_keywords'],
           'description' => $article['article_description']
         );
 
+        $this->data['authorname'] = $article['article_author_name'];
+        $this->data['date'] = date("j. n. Y", strtotime($article['article_submitted_date']));
+        $this->data['archival'] = (strpos($article['article_keywords'], 'archiv') !== false) ? '(Archivní)' : '';
         $this->data['permissions'] = (($this->data['user_id'] == $article['article_author_id']) || $this->data['user_permissions'] >= 2) ? true : false;
 
         $this->data['title'] = $article['article_title'];
@@ -48,8 +47,13 @@ class ClanekController extends Controller
         $this->data['description'] = $article['article_description'];
         $this->data['url'] = $article['article_url'];
 
-        $this->view = 'article';
+        $keywords = explode(", ", $article['article_keywords']);
+        for($i=0; $i<sizeof($keywords); $i++){
+          $this->data['keywords'][$i][0] = $keywords[$i];
+          $this->data['keywords'][$i][1] = "clanky/tag/". urlencode($keywords[$i]);
+        }
 
+        $this->view = 'article';
     }
 
     else

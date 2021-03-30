@@ -1,4 +1,11 @@
 <header>
+  <div class="keywords">
+    <?php foreach ($keywords as $keyword) : ?>
+      <a class="keyword" href="<?= $keyword[1] ?>"><?= $keyword[0] ?></a>
+    <?php endforeach ?>
+  </div>
+  <br />
+  <br /><br />
   <p class="gray">Autor: <?= $authorname ?> | <?= $date ?><span style="float: right"><?= $archival ? 'Archivní' : '' ?></span></p>
   <h1 class="opensans"><?= $title ?></h1>
 </header>

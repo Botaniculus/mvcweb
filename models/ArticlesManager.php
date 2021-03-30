@@ -4,13 +4,13 @@ class ArticlesManager
 {
   public function getArticle($url){
     return Db::querySingleRow('
-      SELECT `article_id`, `article_title`, `article_content`, `article_url`, `article_description`, `article_keywords`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_archival`
+      SELECT `article_id`, `article_title`, `article_content`, `article_url`, `article_description`, `article_keywords`, `article_author_id`, `article_author_name`, `article_submitted_date`
       FROM `articles`
       WHERE `article_url` = ?
     ', array($url));
   }
   public function getArticleAuthorById($id){
-    return Db::querySingleRow('
+    return Db::querySingleColumn('
       SELECT `article_author_id`
       FROM `articles`
       WHERE `article_id` = ?
@@ -26,28 +26,20 @@ class ArticlesManager
         $where = '';
       }
 
-      return Db::queryAllRows("
-        SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_archival`, `article_empty`
+      $articles = Db::queryAllRows("
+        SELECT `article_id`, `article_title`, `article_url`, `article_description`, `article_author_id`, `article_author_name`, `article_submitted_date`, `article_keywords`, `article_empty`
         FROM `articles`
         $where
         ORDER BY `article_submitted_date` DESC, `article_id` DESC
         LIMIT ?, ?
       ", $array);
+      $allArticlesCount = Db::querySingleColumn("
+          SELECT COUNT(*) FROM `articles` $where
+        ", $where ? array($array[0]) : array());
+
+      return array($allArticlesCount, $articles);
   }
 
-  public function getArticlesCount($tag = null){
-    if($tag){
-      $array = array("%" . $tag . "%");
-      $where = "WHERE `article_keywords` LIKE ?";
-    } else{
-      $array = array();
-      $where = '';
-    }
-
-    return Db::querySingleColumn("
-        SELECT COUNT(*) FROM `articles` $where
-      ", $array);
-  }
 
   public function saveArticle($id, $article){
     if(!$id){
@@ -55,7 +47,12 @@ class ArticlesManager
         Db::insert('articles', $article);
       }
       catch (PDOException $e){
-        throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (insert) ' . $article['article_submitted_date']);
+        if(strlen($article['article_keywords']) > 255){
+          throw new UserException('Maximální délka klíčových slov/tagů je 255 znaků');
+        }
+        else{
+          throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (insert)');
+        }
       }
     }
 
@@ -64,7 +61,12 @@ class ArticlesManager
         Db::update('articles', $article, 'WHERE article_id = ?', array($id));
       }
       catch (PDOException $e){
-        throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (update)');
+        if(strlen($article['article_keywords']) > 255){
+          throw new UserException('Maximální délka klíčových slov/tagů je 255 znaků');
+        }
+        else{
+          throw new UserException('Vyberte prosím jiný titulek, tento je již použit. (update)');
+        }
       }
     }
   }

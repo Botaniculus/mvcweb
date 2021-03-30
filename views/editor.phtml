@@ -22,10 +22,6 @@
     <label for="article_author_name">Autor</label><br />
     <input type="text" id="article_author_name" name="article_author_name" class="fancy-input" value="<?= $article['article_author_name'] ?>" /><br /><br />
 
-    <input type="hidden" id="" name="article_archival" value="0" <?= ($article['article_archival'] == 0) ? 'checked' : '' ?> />
-    <input type="checkbox" id="article_archival" name="article_archival" value="1" <?= ($article['article_archival'] == 1) ? 'checked' : '' ?> />
-    <label for="article_archival">Archivní článek</label><br /><br />
-
     <textarea class="fancy-areainput" name="article_content"><?= $article['article_content'] ?></textarea>
 
     <input class="fancy-submit" type="submit" name="article_submit" value="Uložit článek" /><br />

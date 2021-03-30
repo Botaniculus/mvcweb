@@ -47,7 +47,7 @@ class Db
               array_values($parameters));
   }
   public static function update($table, $values = array(), $condition, $parameters = array()){
-      return self::query("UPDATE `$table` SET `".
+    return self::query("UPDATE `$table` SET `".
           implode('` = ?, `', array_keys($values)).
           "` = ? " . $condition,
           array_merge(array_values($values), $parameters));

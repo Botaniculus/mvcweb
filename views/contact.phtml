@@ -3,13 +3,24 @@
   <p>Kontaktujte nás odesláním formuláře níže.</p>
 
   <form method="post" id="form-email">
-      <label for="email">Vaše emailová adresa</label><br />
-      <input class="fancy-input" type="email" id="email" name="email" required="required" value="<?php if (isset($_POST['email'])) echo(htmlspecialchars($_POST['email'])); ?>" /><br /><br />
-      <label for="year">Antispam - zadejte aktuální rok</label><br />
-      <input class="fancy-input" type="text" id="year" name="year" required="required" value="<?php if(isset($_POST['year'])) echo(htmlspecialchars($_POST['year']));?>"/><br /><br />
-      <label for="message">Zpráva</label><br />
-      <textarea required="required" class="fancy-areainput" id="message" name="message"><?php if (isset($_POST['message'])) echo(htmlspecialchars($_POST['message'])); ?></textarea><br /><br />
-      <input type="submit" name="send" value="Odeslat" />
+    <label for="target">Cíl</label><br />
+    <select class="fancy-select" name="target" id="target">
+      <option value="webmaster">Matěj</option>
+      <option value="redaktor">Lazebník</option>
+      <option value="vedouci">Bráca</option>
+      <option value="audi">Audi</option>
+    </select><br /><br />
+
+    <label for="email">Vaše emailová adresa</label><br />
+    <input class="fancy-input" type="email" id="email" name="email" required="required" value="<?= (isset($_POST['email'])) ? htmlspecialchars($_POST['email']) : '' ?>" /><br /><br />
+
+    <label for="year">Antispam - zadejte aktuální rok</label><br />
+    <input class="fancy-input" type="text" id="year" name="year" required="required" value="<?= (isset($_POST['year'])) ? htmlspecialchars($_POST['year']) : '' ?>"/><br /><br />
+
+    <label for="message">Zpráva</label><br />
+    <textarea required="required" class="fancy-areainput" id="message" name="message"><?= (isset($_POST['message'])) ? htmlspecialchars($_POST['message']) : '' ?></textarea><br /><br />
+
+    <input class="fancy-submit" type="submit" name="send" value="Odeslat" />
   </form>
 </section>
 

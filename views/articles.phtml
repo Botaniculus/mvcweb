@@ -6,13 +6,24 @@
   <?php foreach($articles as $article) : ?>
     <div class="article-frame">
       <a href="clanek/<?= $article['article_url'] ?>">
-        <header <?= ($article['article_empty']) ? 'class="empty"' : (($article['article_archival']) ? 'class="archival"' : '') ?> >
 
+        <?php
+        // 0 message, 1 article, 2 archival article
+        $article['level'] = ($article['article_empty']) ? 0 : ((strpos($article['article_keywords'], 'archiv') !== false) ? 2 : 1)
+        ?>
+
+
+        <header <?= ($article['level'] == 0) ? 'class="empty"' : (($article['level'] == 2) ? 'class="archival"' : '') ?> >
         <h2><?= $article['article_title'] ?></h2>
-        <p class="gray"><?= $article['article_author_name'] ?> | <?= date("j. n. Y", strtotime($article['article_submitted_date'])) ?><span style="float: right"><?= ($article['article_archival']) ? 'Archivní' : '' ?></span></p>
+        <p style="float: right;" class="gray"><?= $article['article_author_name'] ?> | <?= date("j. n. Y", strtotime($article['article_submitted_date'])) ?><?=($article['level'] == 2) ? '<i> Archivní</i>' : ''?></p>
+        <div style="clear: both;"></div>
       </header></a>
+
       <section>
-        <?= $article['article_description'] ?> <?= (!$article['article_empty']) ? '<a class="sign" href="clanek/' . $article['article_url'] . '">&#9654</a>' : '<a class="sign dot">&#9632</a>' ?>
+
+
+        <p>
+        <?= $article['article_description'] ?> <?= (!$article['article_empty']) ? '<a class="sign" href="clanek/' . $article['article_url'] . '">&#9654</a>' : '<a class="sign dot">&#9632</a>' ?></p>
         <br />
         <?php if ($user_permissions >= 2 || ($article['article_author_id'] == $user_id)) : ?>
           <br />

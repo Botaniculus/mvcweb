@@ -21,7 +21,6 @@ class EditorController extends Controller
       'article_author_id' => $user['user_id'],
       'article_author_name' => $user['user_name'],
       'article_submitted_date' => date("Y-m-d"),
-      'article_archival' => 0,
       'article_empty' => 1
     );
 
@@ -29,6 +28,7 @@ class EditorController extends Controller
     if(isset($_POST['article_submit'])){
       $keys = array('article_title', 'article_content', 'article_description', 'article_keywords', 'article_author_id', 'article_author_name', 'article_submitted_date', 'article_archival');
       $article = array_intersect_key($_POST, array_flip($keys));
+      $article['article_keywords'] = strtolower($article['article_keywords']);
       $article['article_url'] = $articlesManager->titleToUrl($article['article_title']);
       $article['article_empty'] = (empty($article['article_content'])) ? 1 : 0;
 
@@ -41,7 +41,7 @@ class EditorController extends Controller
             $this->redirect('clanek/' . $article['article_url']);
           }
           else{
-            $this->addMessage('Nemáte oprávnění editovat tento článek, a neupravujte ty skryté vstupy', false);
+            $this->addMessage('Nemáte oprávnění editovat tento článek, a neupravujte ty skryté vstupy ' . $author_id, false);
             $article['article_id'] = '';
           }
         } else{

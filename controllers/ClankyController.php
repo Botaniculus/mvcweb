@@ -2,7 +2,7 @@
 class ClankyController extends Controller
 {
   public function execute($parameters){
-    $onPage = 10;
+    $onPage = 2;
     $articlesManager = new ArticlesManager();
     $userManager = new UserManager();
     $user = $userManager->getUser();
@@ -17,20 +17,24 @@ class ClankyController extends Controller
 
     if((isset($parameters[0]) && is_numeric($parameters[0])) || empty($parameters[0])) {
       $page = (isset($parameters[0])) ? $parameters[0] : 1;
-      $pageCount = ceil($articlesManager->getArticlesCount() / $onPage);
-      $this->data['articles'] = $articlesManager->getArticles($page, $onPage);
+      $articles = $articlesManager->getArticles($page, $onPage);
+      $this->data['articles'] = $articles[1];
+      $pageCount = ceil($articles[0] / $onPage);
       $pagination = new Pagination('clanky/', $pageCount);
     }
-    else if($parameters[0] == "archiv"){
-        $page = (isset($parameters[1])) ? $parameters[1] : 1;
-        $pageCount = ceil($articlesManager->getArticlesCount('article_archival') / $onPage);
-        $this->data['articles'] = $articlesManager->getArticles($page, $onPage, 'article_archival');
-        $pagination = new Pagination('clanky/archiv/', $pageCount);
+    else if($parameters[0] == "tag"){
+        $tag = (isset($parameters[1])) ? urldecode($parameters[1]) : '';
+        $page = (isset($parameters[2])) ? $parameters[2] : 1;
+
+        $articles = $articlesManager->getArticles($page, $onPage, $tag);
+        $pagesCount = ceil($articles[0] / $onPage);
+        $this->data['articles'] = $articles[1];
+
+        $pagination = new Pagination('clanky/tag/' . $tag . '/', $pagesCount);
     }
 
 
     $this->data['pagination'] = $pagination->pagination($page);
-
     $this->view = 'articles';
   }
 }
